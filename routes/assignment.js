@@ -111,4 +111,32 @@ assignmentRouter.patch("/update-assignment", async (req, res) => {
   }
 });
 
+// delete requests
+assignmentRouter.delete("/delete-assignment", async (req, res) => {
+  const { assignmentID } = req.body;
+
+  try {
+    const deleteStatus = await assignmentModel.deleteOne({ _id: assignmentID });
+
+    // if not deleted
+    if (!deleteStatus)
+      return res.status(400).json({
+        msg: "Error deleting assignment => ./routes/assignment.js"
+      });
+
+    if (deleteStatus.deletedCount === 0)
+      return res.status(400).json({
+        msg: "No assignment was deleted!"
+      });
+
+    res.status(200).json(deleteStatus);
+  } catch (err) {
+    if (err)
+      return res.status(500).json({
+        msg: "Error deleting assignment => ./routes/assignment.js",
+        ...err
+      });
+  }
+});
+
 module.exports = assignmentRouter;
