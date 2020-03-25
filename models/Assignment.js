@@ -2,8 +2,12 @@ const mongoose = require("mongoose");
 
 const assignmentSchema = new mongoose.Schema({
   assigned_by: {
-    type: String,
+    type: String,//instead of string object id must be used
     required: [true, "Assigned by is required!"]
+  },
+  subject: {
+    type: String,
+    required: [true, "Subject must be specified!"]
   },
   title: {
     type: String,
@@ -31,6 +35,12 @@ const assignmentSchema = new mongoose.Schema({
   created_at: {
     type: Date,
     default: Date.now()
+  },
+  updated_at: {
+    type: String//string is used here because moment js is used
+  },
+  updated_by: {
+    type: String//instead of string object id must be used
   }
 });
 
